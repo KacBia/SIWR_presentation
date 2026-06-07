@@ -56,7 +56,7 @@ def main():
                       true_pose=tape_c[k]["true_pose"],
                       title="multi-modal belief\nH=%.2f" % frames_c[k]["entropy"])
     fig.suptitle("Multi-modal belief: several symmetric hypotheses at once")
-    fig.tight_layout(); fig.savefig(C.out("global_multimodal.png"), dpi=120); plt.close(fig)
+    fig.tight_layout(); fig.savefig(C.out("global_multimodal.png"), dpi=120,); plt.close(fig)
     print("[corridor] step0 H=%.2f -> final H=%.2f" % (frames_c[0]["entropy"], frames_c[-1]["entropy"]))
     print("wrote", C.out("global_multimodal.png"))
 

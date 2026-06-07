@@ -21,6 +21,7 @@ def plot_world(ax, m, true_pose=None, scan=None, beam_offsets=None, n_theta=None
 
     Scan beams are coloured green (kept) / red (rejected) when ``keep_mask`` is
     given, else a single colour."""
+    ax.clear()
     ax.imshow(m.occ, origin="lower", cmap="Greys", extent=[0, m.width, 0, m.height],
               vmin=0, vmax=1.4, interpolation="nearest")
     ax.set_xlim(0, m.width); ax.set_ylim(0, m.height)
@@ -69,6 +70,7 @@ def plot_belief(ax, m, bel, est_pose=None, true_pose=None, title=None, cmap="hot
                linewidths=0.6, alpha=0.6)
     ax.set_xlim(0, m.width); ax.set_ylim(0, m.height)
     ax.set_aspect("equal"); ax.set_xlabel("x [m]"); ax.set_ylabel("y [m]")
+    ax.set_title('')
     if title:
         ax.set_title(title)
     if est_pose is not None:

@@ -28,16 +28,16 @@ def main():
         snaps.append((step, loc.bel.copy()))
 
     show = [0, 3, 6, 8]
-    fig, axes = plt.subplots(1, len(show), figsize=(4.0 * len(show), 4.2))
+    fig, axes = plt.subplots(1, len(show), figsize=(4.0 * len(show), 4.67))
     for ax, s in zip(axes, show):
         bel = dict(snaps)[s]
         C.viz.plot_belief(ax, m, belief.xy_marginal(bel),
                           est_pose=belief.map_estimate(bel, m.res, C.NTH),
-                          title="after %d motions" % s)
-    fig.suptitle('Motion model: belief spreads into a "banana" (no sensor updates)',
+                          title="po %d ruchach" % s)
+    fig.suptitle('Model ruchu: propagacja przekonania w kształt „banana” (brak aktualizacji z czujników)',
                  fontsize=13)
     fig.tight_layout()
-    fig.savefig(C.out("motion_banana.png"), dpi=120)
+    fig.savefig(C.out("motion_banana.png"), dpi=130, )
     print("wrote", C.out("motion_banana.png"))
 
 

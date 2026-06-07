@@ -63,3 +63,4 @@ def symmetric_corridor(res: float = 0.15, width: float = 12.0, height: float = 4
         _rect(occ, res, cx - 0.4, height - 0.8, cx + 0.4, height - wall)  # top niche
         _rect(occ, res, cx - 0.4, wall, cx + 0.4, 0.8)                    # bottom niche
     return OccupancyMap(occ, res)
+

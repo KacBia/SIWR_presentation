@@ -33,6 +33,11 @@ SPARAMS = dict(sigma=SIG)
 RESULTS = os.path.join(os.path.dirname(__file__), "..", "results")
 os.makedirs(RESULTS, exist_ok=True)
 
+plt.rcParams['text.color'] = '#E0E0E0'
+plt.rcParams['axes.labelcolor'] = '#E0E0E0'
+plt.rcParams['xtick.color'] = '#E0E0E0'
+plt.rcParams['ytick.color'] = '#E0E0E0'
+
 
 def out(name: str) -> str:
     return os.path.join(RESULTS, name)
@@ -86,20 +91,23 @@ def animate(m, tape, offs, panels, path, fps=1, world_title="environment",
     per condition. ``world_mask_from`` indexes the panel whose beam keep-mask is
     drawn on the world (green=kept, red=rejected)."""
     n = len(panels)
-    fig, axes = plt.subplots(1, 1 + n, figsize=(4.3 * (1 + n), 4.6))
-    axes = np.atleast_1d(axes)
-    axW, axBs = axes[0], axes[1:]
+    fig = plt.figure( figsize=(4.3 * (1 + n),5))
+    
 
-    # Fix the layout once, up front. Doing it per-frame makes the axes boxes
-    # drift because the titles change width/content every step.
-    if suptitle:
-        fig.suptitle(suptitle, fontsize=13)
-    fig.tight_layout(rect=(0, 0, 1, 0.94) if suptitle else None)
-    # Freeze each axes' position so nothing re-flows during the animation.
-    for ax in axes:
-        ax.set_position(ax.get_position())
+
 
     def update(i):
+        fig.clf()
+        axes = fig.subplots(1, 1 + n)
+        axes = np.atleast_1d(axes)
+        axW, axBs = axes[0], axes[1:]
+
+        if suptitle:
+            fig.suptitle(suptitle, fontsize=13)
+        fig.tight_layout(rect=(0, 0, 1, 0.94) if suptitle else None)
+
+
+
         fr = tape[i]
         mask = panels[world_mask_from][1][i]["keep_mask"] if world_mask_from is not None else None
         axW.clear()
@@ -115,7 +123,7 @@ def animate(m, tape, offs, panels, path, fps=1, world_title="environment",
                             title=f"{label}\nerr={pf['err']:.2f} m   H={pf['entropy']:.2f}")
 
     anim = FuncAnimation(fig, update, frames=len(tape), interval=1000 // fps)
-    anim.save(path, writer=PillowWriter(fps=fps))
+    anim.save(path.replace('.gif', '.webp'), writer=PillowWriter(fps=fps), savefig_kwargs={'transparent': True, 'facecolor': 'none'})
     plt.close(fig)
     print("wrote", path)
     return path
